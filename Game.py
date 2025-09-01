@@ -20,10 +20,9 @@ def show_result(txt):
     el = document["result"]
     el.text = txt
     el.classList.add("show", "pulse")
-    # remove pulse quickly so it can run again next time
     def _clear():
         el.classList.remove("pulse")
-    timer.set_timeout(_clear, 600)
+    timer.set_timeout(_clear, 700)
 
 def _highlight(node_id, ms=800):
     node = document[node_id]
@@ -32,23 +31,32 @@ def _highlight(node_id, ms=800):
         node.classList.remove("winner-glow")
     timer.set_timeout(_rm, ms)
 
-def animate_effect(winner):
-    el = document["result"]
-    # remove old classes
-    el.classList.remove("scissors-slash", "rock-smash", "paper-wrap")
+def animate_button(node_id):
+    node = document[node_id]
+    # remove old animation classes
+    node.classList.remove("scissors-slash", "rock-smash", "paper-wrap")
     
-    if winner == "scissors":
-        el.classList.add("scissors-slash")
-    elif winner == "rock":
-        el.classList.add("rock-smash")
-    elif winner == "paper":
-        el.classList.add("paper-wrap")
+    if node_id == "scissors":
+        node.classList.add("scissors-slash")
+    elif node_id == "rock":
+        node.classList.add("rock-smash")
+    elif node_id == "paper":
+        node.classList.add("paper-wrap")
     
-    # remove animation class after it ends so it can trigger again
     def clear():
-        el.classList.remove("scissors-slash", "rock-smash", "paper-wrap")
+        node.classList.remove("scissors-slash", "rock-smash", "paper-wrap")
     timer.set_timeout(clear, 800)
 
+def tie_animation():
+    for key in choices.keys():
+        node = document[key]
+        node.classList.add("tie-shake")
+    def clear():
+        for key in choices.keys():
+            document[key].classList.remove("tie-shake")
+    timer.set_timeout(clear, 600)
+
+# --- main game logic ---
 def play(ev):
     global wins, losses, ties
     user = ev.target.id
@@ -57,18 +65,19 @@ def play(ev):
     if user == cpu:
         ties += 1
         show_result("🤝 Tie — both chose " + choices[user])
+        tie_animation()
     elif (user == "rock" and cpu == "scissors") or \
          (user == "paper" and cpu == "rock") or \
          (user == "scissors" and cpu == "paper"):
         wins += 1
         show_result("🎉 You win! " + choices[user] + " beats " + choices[cpu])
         _highlight(user)
-        animate_effect(user)
+        animate_button(user)
     else:
         losses += 1
         show_result("💻 Computer wins! " + choices[cpu] + " beats " + choices[user])
         _highlight(cpu)
-        animate_effect(cpu)
+        animate_button(cpu)
 
     update_score()
 
