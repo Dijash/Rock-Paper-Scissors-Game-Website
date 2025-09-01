@@ -5,259 +5,121 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Rock Paper Scissors - Brython</title>
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython_stdlib.js"></script>
-
   <style>
-   :root{
-  --glass: rgba(255,255,255,0.08);
-  --glass-strong: rgba(255,255,255,0.15);
-  --accent: #00ffd5;
-  --danger: #ff4e4e;
-}
+    :root{
+      --glass: rgba(255,255,255,0.08);
+      --accent: #00ffd5;
+      --danger: #ff4e4e;
+    }
 
-/* page */
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: linear-gradient(-45deg, #141e30, #243b55, #0f9b0f, #11998e);
-  background-size:400% 400%;
-  animation: gradientShift 14s ease infinite;
-  color: #e7f6f2;
-  padding:28px;
-}
-@keyframes gradientShift{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:"Segoe UI", Arial, sans-serif;
+      background: linear-gradient(-45deg, #141e30, #243b55, #0f9b0f, #11998e);
+      background-size:400% 400%;
+      animation: gradientShift 14s ease infinite;
+      color:#e7f6f2;
+      padding:28px;
+    }
+    @keyframes gradientShift{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
 
-/* app card */
-.app{
-  width:min(860px,95vw);
-  padding:30px 28px;
-  border-radius:22px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5),
-              inset 0 0 0 1px rgba(255,255,255,0.05);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:20px;
-  backdrop-filter: blur(10px) saturate(150%);
-  border: 1px solid rgba(255,255,255,0.1);
-  animation: fadeIn .8s ease;
-}
-@keyframes fadeIn{ from{opacity:0; transform:scale(.96);} to{opacity:1; transform:scale(1);} }
+    .app{
+      width:min(860px,95vw);
+      padding:30px 28px;
+      border-radius:22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5),
+                  inset 0 0 0 1px rgba(255,255,255,0.05);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:20px;
+      backdrop-filter: blur(10px) saturate(150%);
+      border: 1px solid rgba(255,255,255,0.1);
+      animation: fadeIn .8s ease;
+    }
+    @keyframes fadeIn{ from{opacity:0; transform:scale(.96);} to{opacity:1; transform:scale(1);} }
 
-h1{ 
-  margin:0; 
-  font-size:2rem; 
-  text-shadow: 0 3px 12px rgba(0,0,0,0.6); 
-  letter-spacing:1px;
-  color:#fff;
-}
+    h1{ margin:0; font-size:2rem; text-shadow: 0 3px 12px rgba(0,0,0,0.6); letter-spacing:1px; color:#fff; }
 
-/* choices row */
-.choices{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-  width:100%;
-}
+    .choices{ display:flex; gap:20px; flex-wrap:wrap; justify-content:center; width:100%; }
 
-/* generic button base */
-.btn{
-  border:0;
-  color:inherit;
-  cursor:pointer;
-  border-radius:16px;
-  transition: all .25s ease;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  user-select:none;
-  -webkit-tap-highlight-color: transparent;
-}
+    .btn{ border:0; color:inherit; cursor:pointer; border-radius:16px; transition: all .25s ease;
+          display:inline-flex; align-items:center; justify-content:center; user-select:none; -webkit-tap-highlight-color: transparent; }
 
-/* choice buttons */
-.choice-btn{
-  width:170px;
-  height:78px;
-  padding:14px 16px;
-  font-size:18px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.35);
-  font-weight:600;
-  gap:10px;
-  backdrop-filter: blur(6px);
-}
-.choice-btn:hover{
-  transform: translateY(-6px) scale(1.05);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,255,213,0.15);
-}
-.choice-btn:active{ transform: scale(.97); }
+    .choice-btn{
+      width:170px; height:78px; padding:14px 16px; font-size:18px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.12); box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+      font-weight:600; gap:10px; backdrop-filter: blur(6px);
+    }
+    .choice-btn:hover{ transform: translateY(-6px) scale(1.05); box-shadow: 0 14px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,255,213,0.15); }
+    .choice-btn:active{ transform: scale(.97); }
 
-/* result area */
-#result{
-  font-size:22px;
-  min-height:30px;
-  opacity:0;
-  transform:scale(.96);
-  transition: opacity .5s ease, transform .5s ease, color .4s;
-  text-align:center;
-  padding:8px 14px;
-  font-weight:600;
-  letter-spacing:0.5px;
-}
-#result.show{ 
-  opacity:1; 
-  transform:scale(1.02); 
-  animation: pulse .7s ease; 
-  color: var(--accent);
-}
-@keyframes pulse{
-  0%{ transform: scale(1) }
-  50%{ transform: scale(1.08) }
-  100%{ transform: scale(1) }
-}
+    #result{
+      font-size:22px; min-height:30px; opacity:0; transform:scale(.96);
+      transition: opacity .5s ease, transform .5s ease, color .4s;
+      text-align:center; padding:8px 14px; font-weight:600; letter-spacing:0.5px;
+    }
+    #result.show{ opacity:1; transform:scale(1.02); animation: pulse .7s ease; color: var(--accent); }
+    @keyframes pulse{ 0%{ transform: scale(1) } 50%{ transform: scale(1.08) } 100%{ transform: scale(1) } }
 
-/* score + reset container */
-.controls{
-  display:flex;
-  gap:16px;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  flex-wrap:wrap;
-  margin-top:10px;
-}
+    .controls{ display:flex; gap:16px; align-items:center; justify-content:center; width:100%; flex-wrap:wrap; margin-top:10px; }
 
-.score{
-  padding:12px 18px;
-  border-radius:14px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  font-weight:600;
-  letter-spacing:0.3px;
-}
+    .score{ padding:12px 18px; border-radius:14px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+            border:1px solid rgba(255,255,255,0.12); box-shadow: 0 8px 20px rgba(0,0,0,0.35); font-weight:600; letter-spacing:0.3px; }
 
-/* reset button */
-.reset-btn{
-  padding:12px 20px;
-  border-radius:16px;
-  background: linear-gradient(135deg, rgba(255,90,90,0.22), rgba(255,40,40,0.15));
-  border:1px solid rgba(255,80,80,0.2);
-  box-shadow: 0 8px 22px rgba(255,40,40,0.12);
-  font-weight:700;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  transition: all .25s ease;
-}
-.reset-btn:hover{
-  transform: translateY(-5px) scale(1.04);
-  box-shadow: 0 14px 34px rgba(255,40,40,0.25);
-  background: linear-gradient(135deg, rgba(255,90,90,0.3), rgba(255,40,40,0.18));
-}
+    .reset-btn{
+      padding:12px 20px; border-radius:16px; background: linear-gradient(135deg, rgba(255,90,90,0.22), rgba(255,40,40,0.15));
+      border:1px solid rgba(255,80,80,0.2); box-shadow: 0 8px 22px rgba(255,40,40,0.12); font-weight:700; display:inline-flex; align-items:center; gap:8px; transition: all .25s ease;
+    }
+    .reset-btn:hover{ transform: translateY(-5px) scale(1.04); box-shadow: 0 14px 34px rgba(255,40,40,0.25);
+                       background: linear-gradient(135deg, rgba(255,90,90,0.3), rgba(255,40,40,0.18)); }
 
-/* winner glow */
-.winner-glow{
-  box-shadow: 0 0 30px 10px var(--accent) !important;
-  transform: translateY(-3px) scale(1.04) !important;
-}
+    .winner-glow{ box-shadow: 0 0 30px 10px var(--accent) !important; transform: translateY(-3px) scale(1.04) !important; }
 
-/* responsive */
-@media (max-width:640px){
-  .choice-btn{ width:140px; height:66px; font-size:16px; }
-  .app{ padding:20px }
-  h1{ font-size:1.6rem }
-}
-/* --- New Winning Animations --- */
-/* Button tie shake */
-.tie-shake {
-  animation: shake 0.6s ease;
-}
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-4px); }
-  100% { transform: translateX(0); }
-}
-/* scissors slash effect */
-.scissors-slash {
-  position: relative;
-  overflow: hidden;
-}
-.scissors-slash::after {
-  content: "";
-  position: absolute;
-  left: -120%;
-  top: 0;
-  width: 200%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
-  animation: slash 0.6s ease forwards;
-  transform: rotate(-20deg);
-}
-@keyframes slash {
-  0% { left: -120%; opacity: 0; }
-  50% { left: 0%; opacity: 1; }
-  100% { left: 120%; opacity: 0; }
-}
+    @media (max-width:640px){
+      .choice-btn{ width:140px; height:66px; font-size:16px; }
+      .app{ padding:20px }
+      h1{ font-size:1.6rem }
+    }
 
-/* rock smash effect */
-.rock-smash {
-  animation: rockSmash 0.6s ease;
-}
-@keyframes rockSmash {
-  0% { transform: scale(1); }
-  25% { transform: scale(1.2) rotate(-5deg); }
-  50% { transform: scale(0.9) rotate(5deg); }
-  75% { transform: scale(1.15) rotate(-3deg); }
-  100% { transform: scale(1); }
-}
+    /* Animations */
+    .tie-shake { animation: shake 0.6s ease; }
+    @keyframes shake { 0%{ transform: translateX(0); } 25%{ transform: translateX(-6px); } 50%{ transform: translateX(6px); } 75%{ transform: translateX(-4px); } 100%{ transform: translateX(0); } }
 
-/* paper wrap effect */
-.paper-wrap {
-  position: relative;
-  overflow: hidden;
-}
-.paper-wrap::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255,255,255,0.15);
-  animation: wrap 0.7s ease forwards;
-}
-@keyframes wrap {
-  0% { left: -100%; }
-  50% { left: 0%; }
-  100% { left: 100%; }
-}
+    .scissors-slash{ position: relative; overflow: hidden; }
+    .scissors-slash::after{ content:""; position:absolute; left:-120%; top:0; width:200%; height:3px;
+                              background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
+                              animation: slash 0.6s ease forwards; transform: rotate(-20deg);}
+    @keyframes slash{ 0%{ left:-120%; opacity:0; } 50%{ left:0%; opacity:1; } 100%{ left:120%; opacity:0; } }
 
+    .rock-smash{ animation: rockSmash 0.6s ease; }
+    @keyframes rockSmash{ 0%{ transform:scale(1) } 25%{ transform:scale(1.2) rotate(-5deg) } 50%{ transform:scale(0.9) rotate(5deg) } 75%{ transform:scale(1.15) rotate(-3deg) } 100%{ transform:scale(1) } }
 
+    .paper-wrap{ position: relative; overflow: hidden; }
+    .paper-wrap::before{ content:""; position:absolute; top:0; left:-100%; width:100%; height:100%; background:rgba(255,255,255,0.15);
+                          animation: wrap 0.7s ease forwards; }
+    @keyframes wrap{ 0%{ left:-100% } 50%{ left:0% } 100%{ left:100% } }
   </style>
 </head>
-<body onload="brython()">
+<body>
   <div class="app" role="application" aria-label="Rock Paper Scissors">
     <h1>🎮 Rock · Paper · Scissors</h1>
 
     <div class="choices" role="radiogroup" aria-label="Choices">
-      <button id="rock" class="btn choice-btn" aria-label="Rock">✊&nbsp;&nbsp;Rock</button>
-      <button id="paper" class="btn choice-btn" aria-label="Paper">✋&nbsp;&nbsp;Paper</button>
-      <button id="scissors" class="btn choice-btn" aria-label="Scissors">✌️&nbsp;Scissors</button>
+      <button id="rock" class="btn choice-btn" aria-label="Rock">✊ Rock</button>
+      <button id="paper" class="btn choice-btn" aria-label="Paper">✋ Paper</button>
+      <button id="scissors" class="btn choice-btn" aria-label="Scissors">✌️ Scissors</button>
     </div>
 
     <div id="result">Make your choice!</div>
@@ -268,7 +130,11 @@ h1{
     </div>
   </div>
 
-  <!-- Brython python file -->
-  <script type="text/python" src="game.py"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython_stdlib.js"></script>
+  <script>
+    window.addEventListener("load", function() { brython(); });
+  </script>
+  <script type="text/python" src="./game.py"></script>
 </body>
 </html>

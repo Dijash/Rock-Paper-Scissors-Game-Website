@@ -33,24 +33,20 @@ def _highlight(node_id, ms=800):
 
 def animate_button(node_id):
     node = document[node_id]
-    # remove old animation classes
     node.classList.remove("scissors-slash", "rock-smash", "paper-wrap")
-    
     if node_id == "scissors":
         node.classList.add("scissors-slash")
     elif node_id == "rock":
         node.classList.add("rock-smash")
     elif node_id == "paper":
         node.classList.add("paper-wrap")
-    
     def clear():
         node.classList.remove("scissors-slash", "rock-smash", "paper-wrap")
     timer.set_timeout(clear, 800)
 
 def tie_animation():
     for key in choices.keys():
-        node = document[key]
-        node.classList.add("tie-shake")
+        document[key].classList.add("tie-shake")
     def clear():
         for key in choices.keys():
             document[key].classList.remove("tie-shake")
@@ -90,7 +86,6 @@ def reset_score(ev):
 # --- bind events ---
 for key in choices.keys():
     document[key].bind("click", play)
-
 document["reset"].bind("click", reset_score)
 
 # --- initial ---
