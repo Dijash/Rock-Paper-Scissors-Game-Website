@@ -1,11 +1,5 @@
 # 🎮 Rock Paper Scissors – Brython Version
 
-![GitHub repo size](https://img.shields.io/github/repo-size/your-username/rock-paper-scissors-brython?style=flat-square)
-![GitHub stars](https://img.shields.io/github/stars/your-username/rock-paper-scissors-brython?style=flat-square)
-![GitHub forks](https://img.shields.io/github/forks/your-username/rock-paper-scissors-brython?style=flat-square)
-![GitHub issues](https://img.shields.io/github/issues/your-username/rock-paper-scissors-brython?style=flat-square)
-![GitHub license](https://img.shields.io/github/license/your-username/rock-paper-scissors-brython?style=flat-square)
-
 A **modern, interactive Rock Paper Scissors game** built entirely with **Brython (Python in the browser)**, HTML, and CSS. This game features **animated winning effects**, a **live scoreboard**, and a **mobile-friendly UI** with **glassmorphism design**.
 
 ---
