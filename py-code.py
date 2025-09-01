@@ -90,3 +90,4 @@ document["reset"].bind("click", reset_score)
 
 # --- initial ---
 update_score()
+# --- IGNORE ---
